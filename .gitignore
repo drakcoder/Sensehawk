@@ -1,0 +1,5 @@
+node_modules
+.env
+ip.txt
+DB_structure.txt
+

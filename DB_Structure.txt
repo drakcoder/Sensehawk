@@ -1,0 +1,34 @@
+structure 1:
+
+{
+	"timestamp":Date,
+   	"project_id":Number,
+    	"equipment_id":Number,
+    	"equipment_name":String,
+    	"dc_current":Number,
+    	"performance_ratio":Number
+}
+
+structure 2:
+
+EquipmentSchema:
+{
+	"project_id":Number,
+        "equipment_name":[equipmentInfoTsSchema]	
+}
+
+EquipmentInfoTsSchema:
+{
+	"timestamp":Date,
+    	"equipment_data_at_ts":[equipmentInfoSchema]
+}
+
+EquipmentInfoModel:
+{
+	"equipment_id":Number,
+    	"equipment_name":String,
+    	"dc_current":Number,
+    	"performance_ratio":Number
+}
+
+{"project_id":1,"timestamp":1,"equipment_id":-1}
