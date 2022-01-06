@@ -5,7 +5,7 @@ fetchDataApiRoute=express.Router();
 
 fetchData=async (req,res)=>{
     db=req.app.locals.DatabaseObject;
-    console.log(req.body)
+    // console.log(req.body)
     let query;
     if(req.body.equipment_id==undefined){
         query={
