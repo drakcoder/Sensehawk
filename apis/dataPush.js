@@ -1,10 +1,12 @@
 const mongoose=require("mongoose");
 const express=require("express");
 const axios=require("axios");
-const { combinedModel }=require("../models/combinedModel");
+const { allParametersDataSchema }=require("../models/allParametersData");
 require("dotenv").config();
 
 const dataPushApiRoute=express.Router();
+
+let allParametersDataModel=mongoose.model("allParametersDataModel",allParametersDataSchema);
 
 dataPush=async (req,res,next)=>{
     //creating request body for stategix4 api
@@ -16,7 +18,7 @@ dataPush=async (req,res,next)=>{
         "from_date": req.body.from_date, 
         "to_date": req.body.to_date, 
         "sort_order": "desc", 
-        "select_columns": [ "dc_current", "timestamp", "performance_ratio", "equipment_name" ,"equipment_id"], 
+        "select_columns": ["*"], 
         "filter_time": "15:30", 
         "filter_criteria": { "project_id": req.body.project_id} 
     }
@@ -29,26 +31,32 @@ dataPush=async (req,res,next)=>{
             let event=new Date(i.timestamp);
             let d=event.toISOString();
             //using the mongoose combined model for creation of schema
-            let obj=new combinedModel({
+            let obj=new allParametersDataModel({
                 "timestamp":d,
                 "project_id":reqBody.filter_criteria.project_id,
                 "equipment_id":i.equipment_id,
                 "equipment_name":i.equipment_name,
-                "dc_current":i.dc_current,
-                "performance_ratio":i.performance_ratio
-            })
+                "parameters":{
+                    "dc_current":i.dc_current,
+                    "dc_voltage":i.dc_voltage,
+                    "equipment_status":i.equipment_status,
+                    "performance_ratio":i.performance_ratio,
+                    "energy":i.energy,
+                    "expected_energy":i.expected_energy
+                }
+            },{strict:false})
             dataToBePushed.push(obj);
         }
         db=req.app.locals.DatabaseObject;
         //inserting the data
-        await db.insertMany(dataToBePushed,{ordered:false})
+        await db.insertMany(dataToBePushed,{ordered:false,strict:false})
         .then((client)=>{
-            console.log(client);
+            console.log(`${dataToBePushed.length} documents have been added`);
         })
         .catch(async (err)=>{
             //bulk updating the data for updating any stagnant values
             //creating the bulk-write query
-            let bulkWriteQuery=[];
+            let bulkWriteQuery=[];console.log
             for(let dup of err.writeErrors){
                 dup=dup.err.op;
                 let sq={
@@ -58,8 +66,7 @@ dataPush=async (req,res,next)=>{
                 }
                 let update={
                     $set:{
-                        dc_current:dup.dc_current,
-                        performance_ratio:dup.performance_ratio
+                        parameters:dup.parameters
                     }
                 }
                 let updateQuery={

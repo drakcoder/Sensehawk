@@ -9,9 +9,9 @@ const combinedSchema=new mongoose.Schema({
     "performance_ratio":Number
 });
 
-combinedModel=mongoose.model("combinedModel",combinedSchema);
+// combinedModel=mongoose.model("combinedModel",combinedSchema);
 
 module.exports={
     "combinedSchema":combinedSchema,
-    "combinedModel":combinedModel
+    // "combinedModel":combinedModel
 }

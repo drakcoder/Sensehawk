@@ -6,9 +6,9 @@ equipmentInfoTsSchema=new mongoose.Schema({
     "equipment_data_at_ts":[equipmentInfoSchema]
 })
 00
-equipmentInfoTsModel=mongoose.model('equipmentInfoModel',equipmentInfoTsSchema);
+// equipmentInfoTsModel=mongoose.model('equipmentInfoModel',equipmentInfoTsSchema);
 
 module.exports={
     "equipmentInfoTsSchema":equipmentInfoTsSchema,
-    "equipmentInfoTsModel":equipmentInfoTsModel
+    // "equipmentInfoTsModel":equipmentInfoTsModel
 };

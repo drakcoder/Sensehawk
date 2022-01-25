@@ -8,9 +8,9 @@ equipmentSchema=new mongoose.Schema(
     }
 );
 
-equipmentModel=mongoose.model("equipmentModel",equipmentSchema);
+// equipmentModel=mongoose.model("equipmentModel",equipmentSchema);
 
 module.exports={
     'equipmentSchema':equipmentSchema,
-    'equipmentModel':equipmentModel
+    // 'equipmentModel':equipmentModel
 };

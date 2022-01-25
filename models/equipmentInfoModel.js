@@ -7,9 +7,9 @@ equipmentInfoSchema=new mongoose.Schema({
     "performance_ratio":Number
 })
 
-equipmentInfoModel=mongoose.model('equipmentInfoTsModel',equipmentInfoSchema);
+// equipmentInfoModel=mongoose.model('equipmentInfoTsModel',equipmentInfoSchema);
 
 module.exports={
     "equipmentInfoSchema":equipmentInfoSchema,
-    "equipmentInfoModel":equipmentInfoModel
+    // "equipmentInfoModel":equipmentInfoModel
 };

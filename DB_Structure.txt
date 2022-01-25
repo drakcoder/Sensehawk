@@ -31,4 +31,24 @@ EquipmentInfoModel:
     	"performance_ratio":Number
 }
 
+
+structure 3:
+{
+	timestamp: Date,
+	project_id: number,
+	data : [
+		{	
+			eid
+			parameters
+		},
+		.
+		.
+		.
+		{	
+			eid
+			parameters
+		}
+	]
+}
+
 {"project_id":1,"timestamp":1,"equipment_id":-1}
