@@ -11,7 +11,7 @@ let allParametersDataModel=mongoose.model("allParametersDataModel",allParameters
 dataPush=async (req,res,next)=>{
     //creating request body for stategix4 api
     const headers={
-        "x-access-token":process.env.TOKEN
+        "x-access-token":req.app.locals.x_access_token
     }
     const reqBody={ 
         "stream_name": "stringdata_5min",
