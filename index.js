@@ -1,9 +1,9 @@
 const axios=require("axios");
 const express=require("express");
 const mongoose=require("mongoose");
-const loginApiRoute=require("./apis/login")
-const dataPushApiRoute=require('./apis/dataPush');
-const fetchDataApiRoute=require("./apis/fetchData");
+const loginApiRoute=require("./routes/strategixLogin.route")
+const dataPushApiRoute=require("./routes/stringDataPush.route");
+const fetchDataApiRoute=require("./routes/stringDataFetch.route");
 require("dotenv").config()
 
 mongoose.connect(process.env.DB_URL,(err,client)=>{
