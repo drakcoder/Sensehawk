@@ -3,8 +3,8 @@ const axios=require('axios');
 
 loginFunction=async (req,res)=>{
     const reqBody={
-        "email":"sensehawk@strategix4.com",
-        "password":"1234567"
+        "email":req.body.email,
+        "password":req.body.password
     }
     await axios.post("https://sensehawk-api.strategix4.com/api/users/token",reqBody)
     .then((msg)=>{

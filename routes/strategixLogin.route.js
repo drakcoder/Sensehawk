@@ -4,6 +4,6 @@ const authentication=require('../middlewares/authentication')
 
 const router=express.Router();
 
-router.get('/',strategixLogin)
+router.post('/',strategixLogin)
 
 module.exports=router;
