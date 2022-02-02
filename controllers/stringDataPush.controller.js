@@ -45,7 +45,7 @@ dataPush=async (req,res,next)=>{
             },{strict:false})
             dataToBePushed.push(obj);
         }
-        db=req.app.locals.DatabaseObject;
+        db=req.app.locals.DatabaseObject
         //inserting the data
         await db.insertMany(dataToBePushed,{ordered:false,strict:false})
         .then((client)=>{
@@ -54,7 +54,10 @@ dataPush=async (req,res,next)=>{
         .catch(async (err)=>{
             //bulk updating the data for updating any stagnant values
             //creating the bulk-write query
-            let bulkWriteQuery=[];console.log
+            let bulkWriteQuery=[];
+            if(err.writeErrors==undefined){
+                return;
+            }
             for(let dup of err.writeErrors){
                 dup=dup.err.op;
                 let sq={
