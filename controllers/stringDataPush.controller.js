@@ -18,11 +18,9 @@ dataPush=async (req,res,next)=>{
         "select_columns": ["*"], 
         "filter_criteria": { "project_id": req.body.project_id} 
     }
-    console.log(reqBody);
     //sending the request for data
     await axios.post("https://sensehawk-api.strategix4.com/api/streams/getstream",reqBody,{headers:headers})
     .then(async (data)=>{
-        console.time("dataPush");
         let reqData=data.data.data;
         let dataToBePushed=[];
         for(let i of reqData){
@@ -79,7 +77,6 @@ dataPush=async (req,res,next)=>{
                 };
                 bulkWriteQuery.push(updateQuery);
             }
-            console.log(bulkWriteQuery);
             //calling the bulk write function
             await db.bulkWrite(bulkWriteQuery)
             .then(msg=>{
@@ -90,7 +87,6 @@ dataPush=async (req,res,next)=>{
                 res.send("[E] error at updating the values of the documents")
             })
         })
-        console.timeEnd("dataPush")
         res.send("check console for data")
     })
     .catch((err)=>{

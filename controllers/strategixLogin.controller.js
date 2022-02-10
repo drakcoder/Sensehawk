@@ -8,9 +8,10 @@ loginFunction=async (req,res)=>{
     }
     await axios.post("https://sensehawk-api.strategix4.com/api/users/token",reqBody)
     .then((msg)=>{
-        console.log(msg.data.data);
-        req.app.locals.x_access_token=msg.data.data.token
-        res.send("check console for output");
+        req.app.locals.x_access_token=msg.data.data.token;
+        if(msg.data.data.token!=undefined){
+            res.send("Login succesful!");
+        }
     })
     .catch((err)=>{
         console.log(err);
