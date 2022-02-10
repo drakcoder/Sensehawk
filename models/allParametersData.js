@@ -17,9 +17,9 @@ const allParametersDataSchema=mongoose.Schema({
     strict:false
 });
 
-// allParametersDataModel=mongoose.model("allParametersDataModel",allParametersDataSchema);
+let allParametersDataModel=mongoose.model("test",allParametersDataSchema);
 
 module.exports={
     "allParametersDataSchema":allParametersDataSchema,
-    // "allParametersDataModel":allParametersDataModel
+    "allParametersDataModel":allParametersDataModel
 }

@@ -30,14 +30,18 @@ DataFetch=async (req,res)=>{
     }
     // console.log(query);
     //querying the database
-    await db.find(query).toArray((err, docs)=>{
+    console.time("test");
+    let docs=await db.find(query).toArray((err, docs)=>{
         if(err){
             console.log(err);
             res.send("[E]");
         }
+        // console.log(docs[0])
         console.log("data sent");
         // console.log(docs[0]);
+        console.timeEnd("test");
         res.send(docs)
-    })
+    });
 }
 module.exports=DataFetch;
+

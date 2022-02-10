@@ -1,10 +1,9 @@
 const mongoose=require("mongoose");
-const express=require("express");
 const axios=require("axios");
 const { allParametersDataSchema }=require("../models/allParametersData");
 require("dotenv").config();
 
-let allParametersDataModel=mongoose.model("allParametersDataModel",allParametersDataSchema);
+let allParametersDataModel=mongoose.model("test",allParametersDataSchema);
 
 dataPush=async (req,res,next)=>{
     //creating request body for stategix4 api
@@ -17,12 +16,13 @@ dataPush=async (req,res,next)=>{
         "to_date": req.body.to_date, 
         "sort_order": "desc", 
         "select_columns": ["*"], 
-        "filter_time": "15:30", 
         "filter_criteria": { "project_id": req.body.project_id} 
     }
+    console.log(reqBody);
     //sending the request for data
     await axios.post("https://sensehawk-api.strategix4.com/api/streams/getstream",reqBody,{headers:headers})
     .then(async (data)=>{
+        console.time("dataPush");
         let reqData=data.data.data;
         let dataToBePushed=[];
         for(let i of reqData){
@@ -56,6 +56,7 @@ dataPush=async (req,res,next)=>{
             //creating the bulk-write query
             let bulkWriteQuery=[];
             if(err.writeErrors==undefined){
+                console.log("no data in that timestamp");
                 return;
             }
             for(let dup of err.writeErrors){
@@ -78,6 +79,7 @@ dataPush=async (req,res,next)=>{
                 };
                 bulkWriteQuery.push(updateQuery);
             }
+            console.log(bulkWriteQuery);
             //calling the bulk write function
             await db.bulkWrite(bulkWriteQuery)
             .then(msg=>{
@@ -88,6 +90,7 @@ dataPush=async (req,res,next)=>{
                 res.send("[E] error at updating the values of the documents")
             })
         })
+        console.timeEnd("dataPush")
         res.send("check console for data")
     })
     .catch((err)=>{
