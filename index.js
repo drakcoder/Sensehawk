@@ -13,7 +13,6 @@ mongoose.connect(process.env.ALT_DB_URL,(err,client)=>{
     }
     console.log('connection succesfull');
     db=mongoose.connection;
-    db=db.collection("test")
     app.locals.DatabaseObject=db;
 })
 const app=express();

@@ -4,6 +4,7 @@ const express=require("express");
 DataFetch=async (req,res)=>{
     //bringing the database object from local storage
     db=req.app.locals.DatabaseObject;
+    db=db.collection("test");
     // console.log(req.body)
     let query;
     //checking if equipment_id is given or not and creating query accordingly
