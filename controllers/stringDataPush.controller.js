@@ -99,6 +99,11 @@ dataPush=async (req,res,next)=>{
     .then(async (data)=>{
         // console.timeEnd("apiCall");
         let reqData=data.data.data,dataToBePushed=[],splitSize=1000;
+        if(reqData.length==0){
+            res.send("check console for data");
+            console.log("no data in that period");
+            return;
+        }
         for(let i of reqData){
             let event=new Date(i.timestamp);
             let d=event.toISOString();
