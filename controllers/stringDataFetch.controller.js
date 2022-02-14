@@ -34,10 +34,10 @@ DataFetch=async (req,res)=>{
     let docs=await db.find(query).toArray((err, docs)=>{
         if(err){
             console.log(err);
-            res.send("[E]");
+            res.send({"ERR":err});
         }
         // console.log(docs[0])
-        console.log("data sent");
+        console.log(docs.length);
         // console.log(docs[0]);
         res.send(docs)
     });

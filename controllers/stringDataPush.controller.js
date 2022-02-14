@@ -93,14 +93,14 @@ dataPush=async (req,res,next)=>{
         "select_columns": ["*"], 
         "filter_criteria": { "project_id": req.body.project_id} 
     }
-    // console.time("apiCall");
+    console.time("apiCall");
     //sending the request for data
     await axios.post("https://sensehawk-api.strategix4.com/api/streams/getstream",reqBody,{headers:headers})
     .then(async (data)=>{
-        // console.timeEnd("apiCall");
+        console.timeEnd("apiCall");
         let reqData=data.data.data,dataToBePushed=[],splitSize=1000;
         if(reqData.length==0){
-            res.send("check console for data");
+            res.send({"sent":true});
             console.log("no data in that period");
             return;
         }
@@ -124,6 +124,7 @@ dataPush=async (req,res,next)=>{
             },{strict:false})
             dataToBePushed.push(obj);
         }
+        console.log(dataToBePushed.length);
         let start=0,end=splitSize;
         let DataBase=req.app.locals.DatabaseObject;
         let db=DataBase.collection("test");
@@ -156,11 +157,11 @@ dataPush=async (req,res,next)=>{
             start+=splitSize
             end+=splitSize
         }
-        res.send("check console for data");
+        res.send({"sent":true});
     })
     .catch((err)=>{
         console.log(err);
-        res.send("[E] error occured while sending request to strategix4 api");
+        res.send({"sent":false,"ERR":err});
     })
 }
 

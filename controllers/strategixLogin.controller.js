@@ -10,11 +10,13 @@ loginFunction=async (req,res)=>{
     .then((msg)=>{
         req.app.locals.x_access_token=msg.data.data.token;
         if(msg.data.data.token!=undefined){
-            res.send("Login succesful!");
+            res.send({"loggedIn":true});
+        }else{
+            res.send({"loggedIn":false,"ERR":msg.data.data.stack})
         }
     })
     .catch((err)=>{
-        console.log(err);
+        res.send({"loggedIn":false,"ERR":err});
     })
     // res.send("not sent")
 }
