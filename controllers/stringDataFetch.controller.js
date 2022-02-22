@@ -7,6 +7,12 @@ DataFetch=async (req,res)=>{
     db=db.collection("test");
     // console.log(req.body)
     let query;
+    if(req.body.project_id==undefined){
+        res.send({
+            "status":false,
+            "error":"project id is required"
+        })
+    }
     //checking if equipment_id is given or not and creating query accordingly
     if(req.body.equipment_id==undefined){
         query={
@@ -25,10 +31,11 @@ DataFetch=async (req,res)=>{
         //setting up date to previous 7 days
         let currDate=new Date();
         let prevDate=new Date(currDate);
-        prevDate.setDate(prevDate.getDate()-7);
+        prevDate.setHours(prevDate.getHours()-6);
         query.timestamp.$gte=prevDate;
         query.timestamp.$lte=currDate;
     }
+    console.log(query);
     // console.log(query);
     //querying the database
     let docs=await db.find(query).toArray((err, docs)=>{

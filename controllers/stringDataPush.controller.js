@@ -93,6 +93,13 @@ dataPush=async (req,res,next)=>{
         "select_columns": ["*"], 
         "filter_criteria": { "project_id": req.body.project_id} 
     }
+    if(reqBody.filter_criteria.project_id==undefined){
+        res.send({
+            "sent":false,
+            "err":"project id is required"
+        })
+        return;
+    }
     console.time("apiCall");
     //sending the request for data
     await axios.post("https://sensehawk-api.strategix4.com/api/streams/getstream",reqBody,{headers:headers})
