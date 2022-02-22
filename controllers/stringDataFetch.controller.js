@@ -39,7 +39,7 @@ DataFetch=async (req,res)=>{
     console.log(query);
     // console.log(query);
     //querying the database
-    let docs=await db.find(query).toArray((err, docs)=>{
+    let docs=await db.find(query,{projection:{_id:0,__v:0}}).toArray((err, docs)=>{
         if(err){
             console.log(err);
             res.send({"ERR":err});
