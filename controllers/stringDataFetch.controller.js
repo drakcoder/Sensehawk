@@ -12,6 +12,7 @@ DataFetch=async (req,res)=>{
             "status":false,
             "error":"project id is required"
         })
+        return;
     }
     //checking if equipment_id is given or not and creating query accordingly
     if(req.body.equipment_id==undefined){
