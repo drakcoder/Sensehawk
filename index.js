@@ -4,9 +4,11 @@ const mongoose=require("mongoose");
 const loginApiRoute=require("./routes/strategixLogin.route")
 const dataPushApiRoute=require("./routes/stringDataPush.route");
 const fetchDataApiRoute=require("./routes/stringDataFetch.route");
+const POADataApiRoute=require("./routes/POAData.route");
+const TotalDataFetchApitRoute=require("./routes/totalDataFetch.route")
 require("dotenv").config()
 
-mongoose.connect(process.env.ALT_DB_URL,(err,client)=>{
+mongoose.connect(process.env.DB_URL,(err,client)=>{
     if(err){
         console.log(err);
         return;
@@ -22,6 +24,8 @@ app.use(express.json());
 app.use('/login',loginApiRoute);
 app.use('/pushData',dataPushApiRoute);
 app.use('/fetchData',fetchDataApiRoute);
+app.use('/streams',POADataApiRoute);
+app.use('/project',TotalDataFetchApitRoute);
 
 app.listen(8000,()=>{
     console.log("app listening to port 8000");
