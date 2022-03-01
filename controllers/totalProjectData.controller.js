@@ -3,8 +3,15 @@ const POAData = require("../models/POAData");
 const { POADataModel,POADataSchema }=require("../models/POAData");
 
 TotalDataFetch=async (req,res,next)=>{
-    let to_date=new Date(req.query.to_date),from_date=new Date(req.query.from_date),project_id=parseInt(req.query.project_id);
-    var sumOfActualEnergy,projectPR
+    let to_date,from_date=new Date(req.query.from_date),project_id=parseInt(req.query.project_id);
+    var sumOfActualEnergy,projectPR;
+    if(req.query.to_date==null){
+        to_date=new Date();
+    }
+    else{
+        to_date=new Date(req.query.to_date);
+    }
+    // console.log(to_date);
     let pipeline1=[
         {
             $match:{
