@@ -16,7 +16,6 @@ POADataPush=async (req,res,next)=>{
     await axios.post("https://sensehawk-api.strategix4.com/api/streams/getstream",reqBody,{headers:headers})
     .then(async (data)=>{
         const Response=data.data.data;
-        console.log(Response.length);
         await POADataModel.insertMany(Response,{"strict":false})
                 .then(()=>{
                     res.send({"sent":true})
