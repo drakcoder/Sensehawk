@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
 const axios = require("axios");
 const { POADataModel, POADataSchema } = require("../models/POAData");
-const _ = require('lodash')
+const _ = require('lodash');
+const { response } = require("express");
 
-POADataPush = async (req, res, next) => {
+const POADataPush = async (req, res, next) => {
     try {
         const headers = {
             "x-access-token": req.app.locals.x_access_token
@@ -17,6 +18,7 @@ POADataPush = async (req, res, next) => {
         }
         const data = await axios.post("https://sensehawk-api.strategix4.com/api/streams/getstream", reqBody, { headers: headers })
         const Response = _.get(data, "data.data");
+        console.log(Response.length)
         try {
             await POADataModel.insertMany(Response, { "strict": false })
             res.send({ "sent": true });
@@ -57,4 +59,6 @@ POADataPush = async (req, res, next) => {
     }
 }
 
-module.exports = POADataPush
+module.exports = {
+    POADataPush
+}

@@ -3,7 +3,7 @@ const POAData = require("../models/POAData");
 const { POADataModel, POADataSchema } = require("../models/POAData");
 const _ = require("lodash");
 
-POADataFetch = async (req, res, next) => {
+const POADataFetch = async (req, res, next) => {
     try {
         let query = {
             project_id: req.body.project_id,
@@ -25,4 +25,6 @@ POADataFetch = async (req, res, next) => {
     }
 }
 
-module.exports = POADataFetch
+module.exports = {
+    POADataFetch
+}
