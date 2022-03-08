@@ -1,26 +1,28 @@
-const mongoose=require("mongoose");
+const mongoose = require("mongoose");
 const POAData = require("../models/POAData");
-const { POADataModel,POADataSchema }=require("../models/POAData");
+const { POADataModel, POADataSchema } = require("../models/POAData");
+const _ = require("lodash");
 
-POADataFetch=async(req,res,next)=>{
-    let query={
-        project_id:req.body.project_id,
-        "timestamp":{
-            $gte:new Date(req.body.from_date),
-            $lte:new Date(req.body.to_date)
+POADataFetch = async (req, res, next) => {
+    try {
+        let query = {
+            project_id: req.body.project_id,
+            "timestamp": {
+                $gte: new Date(_.get(req, "body.from_date")),
+                $lte: new Date(_.get(req, "body.to_date"))
+            }
         }
-    }
-    let reqFields={"_id":0};
-    for(i of req.body.columns){
-        reqFields[i]=1
-    }
-    POADataModel.find(query,reqFields,(err,docs)=>{
-        if(err){
-            console.log(err);
-            res.send("err");
+        let reqFields = { "_id": 0 };
+
+        for (i of _.get(req, "body.columns")) {
+            reqFields[i] = 1
         }
+        const docs = await POADataModel.find(query, reqFields);
         res.send(docs);
-    })
+    }
+    catch (e) {
+        res.send({ "ERR": e });
+    }
 }
 
-module.exports=POADataFetch
+module.exports = POADataFetch
