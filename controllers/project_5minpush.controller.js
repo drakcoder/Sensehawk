@@ -19,8 +19,21 @@ const POADataPush = async (req, res, next) => {
         const data = await axios.post("https://sensehawk-api.strategix4.com/api/streams/getstream", reqBody, { headers: headers })
         const Response = _.get(data, "data.data");
         console.log(Response.length)
+        let dataToBePushed=[];
+        for(i of Response){
+            let obj={parameters:{}};
+            for(p in i){
+                if(p=="project_id"||p=="swiftPV_project_id"||p=="timestamp"){
+                    obj[p]=i[p];
+                }
+                else{
+                    obj.parameters[p]=i[p];
+                }
+            }
+            dataToBePushed.push(obj);
+        }
         try {
-            await POADataModel.insertMany(Response, { "strict": false })
+            await POADataModel.insertMany(dataToBePushed, { "strict": false })
             res.send({ "sent": true });
         }
         catch (err) {
@@ -39,7 +52,7 @@ const POADataPush = async (req, res, next) => {
                     }
                 }
                 let update = {
-                    $set: setQuery
+                    $set: dup.parameters
                 }
                 let updateQuery = {
                     "updateOne": {

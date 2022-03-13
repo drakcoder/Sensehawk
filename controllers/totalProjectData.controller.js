@@ -27,7 +27,7 @@ const TotalDataFetch = async (req, res, next) => {
                                     year: { $year: "$timestamp" },
                                     month: { $month: "$timestamp" }
                                 },
-                                total_energy: { $sum: "$energy" }
+                                total_energy: { $sum: "$parameters.energy" }
                             }
                         },
                         {
@@ -57,7 +57,7 @@ const TotalDataFetch = async (req, res, next) => {
                                     year: { $year: "$timestamp" },
                                     month: { $month: "$timestamp" }
                                 },
-                                performance_ratio: { $avg: "$performance_ratio" }
+                                performance_ratio: { $avg: "$parameters.performance_ratio" }
                             }
                         },
                         {
