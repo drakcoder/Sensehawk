@@ -1,18 +1,43 @@
 const mongoose = require("mongoose");
 
 const projectData_5minSchema = mongoose.Schema({
-    "timestamp": Date,
-    "project_id": Number,
-    "swiftPV_project_id": Number,
+    "timestamp": {
+        type:Date,
+        required:true
+    },
+    "project_id": {
+        type:Number,
+        required:true
+    },
+    "swiftPV_project_id": {
+        type:Number,
+        required:true
+    },
     parameters:{
-        "power": Number,
-        "energy": Number,
-        "pv_index": Number,
-        "expected_power": Number,
-        "revenue_rate": Number,
-        "expected_energy": Number,
-        "poa_irradiance": Number,
-        "performance_ratio": Number
+        "power": {
+            type:Number
+        },
+        "energy": {
+            type:Number
+        },
+        "pv_index": {
+            type:Number
+        },
+        "expected_power": {
+            type:Number
+        },
+        "revenue_rate": {
+            type:Number
+        },
+        "expected_energy": {
+            type:Number
+        },
+        "poa_irradiance": {
+            type:Number
+        },
+        "performance_ratio": {
+            type:Number
+        }
     }
 }, {
     strict: false,

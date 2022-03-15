@@ -1,17 +1,41 @@
 const mongoose = require("mongoose");
 
 const stringData_5minSchema=mongoose.Schema({
-    "timestamp":Date,
-    "project_id":Number,
-    "equipment_id":String,
-    "equipment_name":String,
+    "timestamp":{
+        type:Date,
+        required:true
+    },
+    "project_id":{
+        type:Number,
+        required:true
+    },
+    "equipment_id":{
+        type:String,
+        required:true
+    },
+    "equipment_name":{
+        type:String,
+        required:true
+    },
     "parameters":{
-        "dc_current":Number,
-        "dc_voltage":Number,
-        "equipment_status":Number,
-        "performance_ratio":Number,
-        "energy":Number,
-        "expected_energy":Number
+        "dc_current":{
+            type:Number
+        },
+        "dc_voltage":{
+            type:Number
+        },
+        "equipment_status":{
+            type:Number
+        },
+        "performance_ratio":{
+            type:Number
+        },
+        "energy":{
+            type:Number
+        },
+        "expected_energy":{
+            type:Number
+        }
         }
 },{
     strict:false,

@@ -21,7 +21,7 @@ const stringData_5minPush = async (req, res, next) => {
         for(i of Response){
             let obj={parameters:{}};
             for(p in i){
-                if(p=="project_id"||p=="equipment_id"||p=="timestamp"){
+                if(p=="project_id"||p=="equipment_id"||p=="timestamp"||p=="equipment_name"){
                     obj[p]=i[p];
                 }
                 else{
@@ -45,7 +45,7 @@ const stringData_5minPush = async (req, res, next) => {
                 }
                 setQuery = {}
                 for (i of Object.keys(dup)) {
-                    if (i != "timestamp" && i != "equipment_id" && i != "project_id" && i != "_id" && i != "__v") {
+                    if (i != "timestamp" && i != "equipment_id" && i != "project_id" && i != "_id" && i != "__v"&&i!="timestamp") {
                         setQuery[i] = dup[i]
                     }
                 }
