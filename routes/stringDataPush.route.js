@@ -1,9 +1,9 @@
 const express=require('express');
-const stringDataPush=require('../controllers/stringDataPush.controller');
+const { stringData_5minPush }=require('../controllers/stringDataPush.controller');
 const authentication = require('../middlewares/authentication');
 
 const router=express.Router();
 
-router.post('/',authentication,stringDataPush);
+router.post('/',authentication,stringData_5minPush);
 
 module.exports=router;

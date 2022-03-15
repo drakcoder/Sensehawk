@@ -1,5 +1,4 @@
-const POAData = require("../models/POAData");
-const { POADataModel, POADataSchema } = require("../models/POAData");
+const {projectData_5minModel,projectData_5minSchema}=require('../models/projectData_5min.model')
 const _ = require("lodash");
 
 const TotalDataFetch = async (req, res, next) => {
@@ -85,7 +84,7 @@ const TotalDataFetch = async (req, res, next) => {
                 }
             }
         ]
-        let data=await POADataModel.aggregate(pipeline)
+        let data=await projectData_5minModel.aggregate(pipeline)
         res.send(data[0]);
     }
     catch (e) {

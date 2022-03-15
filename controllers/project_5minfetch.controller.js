@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
-const POAData = require("../models/POAData");
-const { POADataModel, POADataSchema } = require("../models/POAData");
+const {projectData_5minModel,projectData_5minSchema}=require('../models/projectData_5min.model')
 const _ = require("lodash");
 
 const POADataFetch = async (req, res, next) => {
@@ -17,7 +16,7 @@ const POADataFetch = async (req, res, next) => {
         for (i of _.get(req, "body.columns")) {
             reqFields[i] = 1
         }
-        const docs = await POADataModel.find(query, reqFields);
+        const docs = await projectData_5minModel.find(query, reqFields);
         res.send(docs);
     }
     catch (e) {

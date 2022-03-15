@@ -8,7 +8,7 @@ const executionRecordSchema= new mongoose.Schema({
     stream_name:String
 },{
     strict:false,
-    collation:"executionRecords"
+    collection:"executionRecords"
 });
 
 const executionRecordsModel=mongoose.model('executionRecords',executionRecordSchema);

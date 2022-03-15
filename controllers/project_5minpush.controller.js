@@ -1,10 +1,8 @@
-const mongoose = require("mongoose");
 const axios = require("axios");
-const { POADataModel, POADataSchema } = require("../models/POAData");
+const { projectData_5minModel,projectData_5minSchema} = require("../models/projectData_5min.model");
 const _ = require('lodash');
-const { response } = require("express");
 
-const POADataPush = async (req, res, next) => {
+const project_5minPush = async (req, res, next) => {
     try {
         const headers = {
             "x-access-token": req.app.locals.x_access_token
@@ -33,7 +31,7 @@ const POADataPush = async (req, res, next) => {
             dataToBePushed.push(obj);
         }
         try {
-            await POADataModel.insertMany(dataToBePushed, { "strict": false })
+            await projectData_5minModel.insertMany(dataToBePushed, { "strict": false })
             res.send({ "sent": true });
         }
         catch (err) {
@@ -62,7 +60,7 @@ const POADataPush = async (req, res, next) => {
                 };
                 bulkWriteQuery.push(updateQuery);
             }
-            await POADataModel.bulkWrite(bulkWriteQuery)
+            await projectData_5minModel.bulkWrite(bulkWriteQuery)
             res.send({ "sent": true });
         }
     }
@@ -73,5 +71,5 @@ const POADataPush = async (req, res, next) => {
 }
 
 module.exports = {
-    POADataPush
+    project_5minPush
 }

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const POADataSchema = mongoose.Schema({
+const projectData_5minSchema = mongoose.Schema({
     "timestamp": Date,
     "project_id": Number,
     "swiftPV_project_id": Number,
@@ -19,9 +19,9 @@ const POADataSchema = mongoose.Schema({
     collection: "ProjectData"
 })
 
-const POADataModel = mongoose.model('ProjectData', POADataSchema);
+const projectData_5minModel = mongoose.model('ProjectData', projectData_5minSchema);
 
 module.exports = {
-    "POADataSchema": POADataSchema,
-    "POADataModel": POADataModel
+    projectData_5minSchema, 
+    projectData_5minModel
 }

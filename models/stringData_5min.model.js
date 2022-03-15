@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const allParametersDataSchema=mongoose.Schema({
+const stringData_5minSchema=mongoose.Schema({
     "timestamp":Date,
     "project_id":Number,
     "equipment_id":String,
@@ -14,12 +14,13 @@ const allParametersDataSchema=mongoose.Schema({
         "expected_energy":Number
         }
 },{
-    strict:false
+    strict:false,
+    collection:"StringData"
 });
 
-let allParametersDataModel=mongoose.model("test",allParametersDataSchema);
+let stringData_5minModel=mongoose.model("test",stringData_5minSchema);
 
 module.exports={
-    "allParametersDataSchema":allParametersDataSchema,
-    "allParametersDataModel":allParametersDataModel
+    stringData_5minSchema,
+    stringData_5minModel
 }
