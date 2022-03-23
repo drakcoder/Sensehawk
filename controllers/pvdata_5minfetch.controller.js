@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
-const {projectData_5minTimeModel,projectData_5minTimeSchema}=require('../models/projectData_5minTime.model')
+const {pvData_5minModel,pvData_5minSchema}=require('../models/pvData_5min.model')
 const _ = require("lodash");
 
-const POADataFetch = async (req, res, next) => {
+const pvDataFetch = async (req, res, next) => {
     try {
         let query = {
             "metadata.project_id": req.body.project_id,
@@ -16,14 +16,15 @@ const POADataFetch = async (req, res, next) => {
         for (i of _.get(req, "body.columns")) {
             reqFields.metadata.parameters[i] = 1
         }
-        const docs = await projectData_5minTimeModel.find(query, reqFields);
+        const docs = await pvData_5minModel.find(query, reqFields);
         res.send(docs);
     }
     catch (e) {
+        console.log(e);
         res.send({ "ERR": e });
     }
 }
 
 module.exports = {
-    POADataFetch
+    pvDataFetch
 }

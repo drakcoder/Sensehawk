@@ -1,14 +1,14 @@
 const axios = require("axios");
-const { projectData_5minTimeModel,projectData_5minTimeSchema} = require("../models/projectData_5minTime.model");
+const { pvData_5minModel,pvData_5minSchema} = require("../models/pvData_5min.model");
 const _ = require('lodash');
 
-const project_5minPush = async (req, res, next) => {
+const pvData_5minPush = async (req, res, next) => {
     try {
         const headers = {
             "x-access-token": req.app.locals.x_access_token
         }
         const reqBody = {
-            "stream_name": "project_5min",
+            "stream_name": "pvdata_5min",
             "from_date": req.body.from_date,
             "to_date": req.body.to_date,
             "select_columns": ["*"],
@@ -21,7 +21,7 @@ const project_5minPush = async (req, res, next) => {
         for(i of Response){
             let obj={parameters:{}};
             for(p in i){
-                if(p=="project_id"||p=="swiftPV_project_id"||p=="timestamp"){
+                if(p=="project_id"||p=="swiftPV_project_id"||p=="timestamp"||p=="equipment_name"||p=="equipment_id"){
                     obj[p]=i[p];
                 }
                 else{
@@ -32,11 +32,12 @@ const project_5minPush = async (req, res, next) => {
             dataToBePushed.push(obj);
         }
         try {
-            await projectData_5minTimeModel.insertMany(dataToBePushed, { "strict": false })
+            await pvData_5minModel.insertMany(dataToBePushed, { "strict": false })
             res.send({ "sent": true });
         }
         catch (err) {
             let bulkWriteQuery = []
+            console.log(err);
             for (let dup of err.writeErrors) {
                 dup = dup.err.op.metadata;
                 let sq = {
@@ -61,7 +62,7 @@ const project_5minPush = async (req, res, next) => {
                 };
                 bulkWriteQuery.push(updateQuery);
             }
-            await projectData_5minTimeModel.bulkWrite(bulkWriteQuery)
+            await pvData_5minModel.bulkWrite(bulkWriteQuery)
             res.send({ "sent": true });
         }
     }
@@ -72,5 +73,5 @@ const project_5minPush = async (req, res, next) => {
 }
 
 module.exports = {
-    project_5minPush
+    pvData_5minPush
 }

@@ -1,4 +1,4 @@
-const {projectData_5minModel,projectData_5minSchema}=require('../models/projectData_5min.model')
+const {projectData_5minTimeModel,projectData_5minTimeSchema}=require('../models/projectData_5minTime.model')
 const _ = require("lodash");
 
 const TotalDataFetch = async (req, res, next) => {
@@ -13,8 +13,8 @@ const TotalDataFetch = async (req, res, next) => {
         let pipeline=[
             {
                 $match: {
-                    "project_id": project_id,
-                    "timestamp": { $gte: from_date, $lte: to_date }
+                    "metadata.project_id": project_id,
+                    "metadata.timestamp": { $gte: from_date, $lte: to_date }
                 }
             },
             {
@@ -23,10 +23,10 @@ const TotalDataFetch = async (req, res, next) => {
                         {
                             $group: {
                                 _id: {
-                                    year: { $year: "$timestamp" },
-                                    month: { $month: "$timestamp" }
+                                    year: { $year: "$metadata.timestamp" },
+                                    month: { $month: "$metadata.timestamp" }
                                 },
-                                total_energy: { $sum: "$parameters.energy" }
+                                total_energy: { $sum: "$metadata.parameters.energy" }
                             }
                         },
                         {
@@ -53,10 +53,10 @@ const TotalDataFetch = async (req, res, next) => {
                         {
                             $group: {
                                 _id: {
-                                    year: { $year: "$timestamp" },
-                                    month: { $month: "$timestamp" }
+                                    year: { $year: "$metadata.timestamp" },
+                                    month: { $month: "$metadata.timestamp" }
                                 },
-                                performance_ratio: { $avg: "$parameters.performance_ratio" }
+                                performance_ratio: { $avg: "$metadata.parameters.performance_ratio" }
                             }
                         },
                         {
@@ -84,7 +84,7 @@ const TotalDataFetch = async (req, res, next) => {
                 }
             }
         ]
-        let data=await projectData_5minModel.aggregate(pipeline)
+        let data=await projectData_5minTimeModel.aggregate(pipeline)
         res.send(data[0]);
     }
     catch (e) {
